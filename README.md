@@ -1,4 +1,4 @@
-# AiAdminBundle
+# Sonata Admin Logger
 
 ## 1. Install
 
