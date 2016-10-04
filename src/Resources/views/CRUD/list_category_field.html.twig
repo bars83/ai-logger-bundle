@@ -1,0 +1,15 @@
+{% extends 'SonataAdminBundle:CRUD:base_list_field.html.twig' %}
+
+{% block field %}
+    <div>
+        {% if object.categoryClass %}
+            {% set adminsOptions = admin.getAdminsOptions() %}
+            {% if object.categoryClass in adminsOptions|keys %}
+                {% set option = adminsOptions[object.categoryClass] %}
+                <a href="{{ path(option['route'], {'id': object.categoryId}) }}">{{ object.categoryName }}</a>
+            {% else %}
+                {{ object.categoryName }}
+            {% endif %}
+        {% endif %}
+    </div>
+{% endblock %}

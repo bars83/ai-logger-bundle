@@ -1,0 +1,13 @@
+{% extends 'SonataAdminBundle:CRUD:base_list_field.html.twig' %}
+
+{% block field %}
+    <div>
+        {% set adminsOptions = admin.getAdminsOptions() %}
+        {% if object.entityClass in adminsOptions|keys %}
+            {% set option = adminsOptions[object.entityClass] %}
+            {{ option.groupLabelTrans }}
+        {% else %}
+            {{ object.groupLabel |trans }}
+        {% endif %}
+    </div>
+{% endblock %}

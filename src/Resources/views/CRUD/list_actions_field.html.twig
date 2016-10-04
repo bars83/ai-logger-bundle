@@ -1,0 +1,14 @@
+{% extends 'SonataAdminBundle:CRUD:base_list_field.html.twig' %}
+
+{% block field %}
+    <div>
+        {% if object.type == 'update' %}
+            <div class="btn-group">
+                <a href="{{ admin.generateUrl('show', {'id': object.id}) }}" class="btn btn-sm btn-default view_link" title="Показать">
+                    <i class="glyphicon glyphicon-zoom-in"></i>
+                    Показать
+                </a>
+            </div>
+        {% endif %}
+    </div>
+{% endblock %}

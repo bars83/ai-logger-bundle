@@ -1,0 +1,25 @@
+{% extends 'SonataAdminBundle:CRUD:base_list_field.html.twig' %}
+
+{% block field %}
+    <div>
+        {% set adminsOptions = admin.getAdminsOptions() %}
+        {% if object.entityClass in adminsOptions|keys %}
+            {% set option = adminsOptions[object.entityClass] %}
+        {% endif %}
+        {% if object.type == 'create' %}
+            Создал {{ block('entity_link') }}
+        {% elseif object.type == 'update' %}
+            Изменил {{ block('entity_link') }}
+        {% elseif object.type == 'remove' %}
+            Удалил ID {{ object.id }}
+        {% endif %}
+    </div>
+{% endblock %}
+
+{% block entity_link %}
+    {% if option is defined %}
+        <a href="{{ path(option['route'], {'id': object.entityId}) }}">"{{ object.entityName }}"</a>
+    {% else %}
+        "{{ object.entityName }}"
+    {% endif %}
+{% endblock %}

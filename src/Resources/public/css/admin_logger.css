@@ -1,0 +1,20 @@
+.changeset {
+    padding:0 20px 20px 20px;
+    margin:0;
+}
+.changeset .rows {
+    margin:15px 0 20px 0;
+    padding: 15px;
+}
+
+.changeset .rows.white {
+    background:#fff;
+}
+.changeset .rows.grey{
+    background:#EDEDED;
+}
+.changeset .valBox{
+    border: 1px dotted #666;
+    padding: 5px;
+    margin: 5px 0px;
+}

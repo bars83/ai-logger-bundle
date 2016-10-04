@@ -1,0 +1,75 @@
+{% block ai_admin_log_widget %}
+    <link rel="stylesheet" type="text/css" href="{{ asset('/bundles/AiAdminlogger/css/admin_logger.css') }}" />
+    {% if collection is defined and collection is iterable %}
+        <div class="row">
+        <div class="col-md-12">
+            <table class="table table-bordered table-striped">
+                <thead>
+                <tr>
+                    <th>Дата</th>
+                    <th>Пользователь</th>
+                    <th>Произведенные изменения</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for row in collection %}
+                    <tr>
+                        <td class="sonata-ba-list-field sonata-ba-list-field-datetime">{{ row.crdate|date('d-m-Y H:i') }}</td>
+                        <td class="sonata-ba-list-field sonata-ba-list-field-string">{{ row.user }}</td>
+                        <td class="sonata-ba-list-field sonata-ba-list-field-string">
+                            {% if row.type == 'create' %}
+                                Создал {{ row.user }}: "{{ row.getEntityName() }}"
+                            {% elseif row.type == 'delete' %}
+                                Удалил {{ row.user }}: "{{ row.getEntityName() }}"
+                            {% elseif row.type == 'update' %}
+                                <div class="changeset">
+                                    {% for key, val in row.changeset %}
+                                        {%  set cssClass = 'white'  %}
+                                        {% if loop.index is odd %}
+                                            {%  set cssClass = 'grey'  %}
+                                        {% endif %}
+                                        {%  if((val.old != null or val.new != null) and val.old is not iterable and val.new is not iterable ) %}
+                                            {% set fieldName = "list.label_" ~ key %}
+                                            <div class="rows {{ cssClass }}">
+                                                <h1>Изменил <strong>{{ fieldName|trans({},'messages') }}</strong> в <strong>{{ val.groupName }}</strong></h1>
+                                                <h2><strong>c</strong></h2>
+                                                <div class="valBox">
+                                                    {% if val.old is same as(false) %}
+                                                        <p>{{ "list.label_off"|trans }}</p>
+                                                    {% elseif val.old is same as(true) %}
+                                                        <p>{{ "list.label_on"|trans }}</p>
+                                                    {% elseif val.old != '' %}
+                                                        <p>{{ val.old|raw }}</p>
+                                                    {% else %}
+                                                        <p>&nbsp;</p>
+                                                    {% endif %}
+                                                </div>
+                                                <h2><strong>на</strong></h2>
+                                                <div class="valBox">
+                                                    {% if val.new is same as(false) %}
+                                                        <p>{{ "list.label_off"|trans }}</p>
+                                                    {% elseif val.new is same as(true) %}
+                                                        <p>{{ "list.label_on"|trans }}</p>
+                                                    {% elseif val.new != '' %}
+                                                        <p>{{ val.new|raw }}</p>
+                                                    {% else %}
+                                                        <p>&nbsp;</p>
+                                                    {% endif %}
+                                                </div>
+                                            </div>
+                                        {% endif %}
+                                    {% endfor %}
+                                </div>
+                            {% endif %}
+
+                        </td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+    {% else %}
+        История не найдена
+    {% endif %}
+{% endblock ai_admin_log_widget %}

@@ -1,0 +1,42 @@
+# Security
+AdminLog: Журнал действий
+Admin Log List: Журнал действий
+
+create: Объект создан
+update: Объект обновлен
+remove: Объект удален
+
+breadcrumb:
+  link_admin_log_list: Журнал операций
+  link_admin_log_show: Журнал операций
+
+list: &labels
+  label_crdate : Дата
+  label_object_link: Сущности
+  label_type_description: Описание
+  label_group: Раздел
+  label_admin: Подраздел
+  label_entity_link: Сущности
+  label_category_link: Рубрика
+  label_entity_name: Сущность
+  label_category_name: Категория
+  label_group_label: Разделы
+  label_admin_label: Подраздел
+  label_changeset: Изменения
+  label_create_type: Объект создан
+  label_update_type: Объект обновлен
+  label_remove_type: Объект удален
+  label_created: Создан
+  label_updated: Изменен
+  label_removed: Удален
+  label_on: Вкл
+  label_off: Выкл
+
+filter:
+    << : *labels
+
+show:
+    << : *labels
+
+form:
+    << : *labels

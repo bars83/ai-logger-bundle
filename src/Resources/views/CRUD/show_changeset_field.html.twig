@@ -1,0 +1,46 @@
+{% extends 'SonataAdminBundle:CRUD:base_show_field.html.twig' %}
+
+
+{% block field %}
+    <link rel="stylesheet" type="text/css" href="{{ asset('/bundles/AiAdminlogger/css/admin_logger.css') }}" />
+    <div class="container changeset">
+    {% for key, val in value %}
+        {% set fieldName = "list.label_" ~ key %}
+
+        {%  set cssClass = 'white'  %}
+        {% if loop.index is odd %}
+            {%  set cssClass = 'grey'  %}
+        {% endif %}
+        {%  if((val.old != null or val.new != null) and val.old is not iterable and val.new is not iterable ) %}
+            {% set fieldName = "list.label_" ~ key %}
+            <div class="rows {{ cssClass }}">
+                <h1>Изменил <strong>{{ fieldName|trans({},'messages') }}</strong> в <strong>{{ val.groupName }}</strong></h1>
+                <h2><strong>c</strong></h2>
+                <div class="valBox">
+                    {% if val.old is same as(false) %}
+                        <p>{{ "list.label_off"|trans }}</p>
+                    {% elseif val.old is same as(true) %}
+                        <p>{{ "list.label_on"|trans }}</p>
+                    {% elseif val.old != '' %}
+                        <p>{{ val.old|raw }}</p>
+                    {% else %}
+                        <p>&nbsp;</p>
+                    {% endif %}
+                </div>
+                <h2><strong>на</strong></h2>
+                <div class="valBox">
+                    {% if val.new is same as(false) %}
+                        <p>{{ "list.label_off"|trans }}</p>
+                    {% elseif val.new is same as(true) %}
+                        <p>{{ "list.label_on"|trans }}</p>
+                    {% elseif val.new != '' %}
+                        <p>{{ val.new|raw }}</p>
+                    {% else %}
+                        <p>&nbsp;</p>
+                    {% endif %}
+                </div>
+            </div>
+        {% endif %}
+    {% endfor %}
+    </div>
+{% endblock %}

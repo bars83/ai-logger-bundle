@@ -1,0 +1,26 @@
+{
+	"name": "ai/logger-bundle",
+	"type": "symfony-bundle",
+	"description": "Sonata-Admin logger bundle",
+	"require": {
+		"php": ">=5.4.0",
+		"symfony/framework-bundle": "~2.8",
+		"sonata-project/admin-bundle": "2.3.10",
+		"sonata-project/doctrine-orm-admin-bundle": "2.3.3",
+		"sonata-project/user-bundle": "~2.2"
+	},
+	"authors": [
+	  {
+		"name": "Ruslan Muriev",
+		"email": "ruslana.net@gmail.com"
+	  }
+	],
+	"autoload": {
+	  "psr-4": { "Ai\\LoggerBundle\\": "src/" }
+	},
+    "extra": {
+        "branch-alias": {
+            "dev-master": "1.0.0-dev"
+        }
+    }
+}

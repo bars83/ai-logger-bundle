@@ -1,0 +1,41 @@
+services:
+    ai_admin_logger.events.post_persist:
+        class: Ai\Bundle\AdminLoggerBundle\Event\AdminLogger
+        tags:
+            - { name: kernel.event_listener, event: sonata.admin.event.persistence.post_persist, method: create }
+        calls:
+            - [setContainer, ["@service_container"]]
+
+    ai_admin_logger.events.pre_update:
+        class: Ai\Bundle\AdminLoggerBundle\Event\AdminLogger
+        tags:
+            - { name: kernel.event_listener, event: sonata.admin.event.persistence.pre_update, method: update }
+        calls:
+            - [setContainer, ["@service_container"]]
+
+    ai_admin_logger.events.pre_remove:
+        class: Ai\Bundle\AdminLoggerBundle\Event\AdminLogger
+        tags:
+            - { name: kernel.event_listener, event: sonata.admin.event.persistence.pre_remove, method: remove }
+        calls:
+            - [setContainer, ["@service_container"]]
+
+    ai_admin_logger.admin.admin_log:
+        class: Ai\Bundle\AdminLoggerBundle\Admin\AdminLogAdmin
+        arguments: [~, Ai\Bundle\AdminLoggerBundle\Entity\AdminLog, SonataAdminBundle:CRUD]
+        calls:
+            - [setContainer, ["@service_container"]]
+        tags:
+            -
+                name: sonata.admin
+                manager_type: orm
+                group: admin_log
+                label: Журнал действий
+                label_translator_strategy: sonata.admin.label.strategy.underscore
+                autoadmin: true
+
+    ai_admin_logger.form.type.admin_log:
+        class: Ai\Bundle\AdminLoggerBundle\Form\Type\AdminLogType
+        arguments: ["@doctrine.orm.default_entity_manager"]
+        tags:
+            - { name: form.type, alias: ai_admin_log }

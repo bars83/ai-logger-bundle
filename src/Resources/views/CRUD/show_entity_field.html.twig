@@ -1,0 +1,15 @@
+{% extends 'SonataAdminBundle:CRUD:base_show_field.html.twig' %}
+
+{% block field %}
+    <div>
+        {% set adminsOptions = admin.getAdminsOptions() %}
+        {% if object.type == 'remove' %}
+            {{ object.entityName }}
+        {% elseif object.entityClass in adminsOptions|keys %}
+            {% set option = adminsOptions[object.entityClass] %}
+            <a href="{{ path(option['route'], {'id': object.entityId}) }}">{{ object.entityName }}</a>
+        {% else %}
+            {{ object.entityName }}
+        {% endif %}
+    </div>
+{% endblock %}
