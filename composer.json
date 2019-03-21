@@ -4,7 +4,7 @@
 	"description": "Sonata-Admin logger bundle",
 	"require": {
 		"php": ">=5.4.0",
-		"symfony/framework-bundle": "~2.8",
+		"symfony/framework-bundle": ">=2.8",
 		"sonata-project/admin-bundle": "2.3.10",
 		"sonata-project/doctrine-orm-admin-bundle": "2.3.3",
 		"sonata-project/user-bundle": "~2.2"
