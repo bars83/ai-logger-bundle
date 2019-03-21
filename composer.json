@@ -13,7 +13,7 @@
 	  }
 	],
 	"autoload": {
-	  "psr-4": { "Ai\\LoggerBundle\\": "src/" }
+	  "psr-4": { "Ai\\Bundle\\AdminLoggerBundle\\": "src/" }
 	},
     "extra": {
         "branch-alias": {
