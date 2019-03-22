@@ -69,28 +69,28 @@ class AdminLogAdmin extends Admin
             ->add(
                 'crdate',
                 'doctrine_orm_datetime_range',
-                ['field_type'=>'sonata_type_datetime_range_picker'],
+                [],
                 null,
                 [
-                    'widget' => 'single_text',
-                    'format' => 'dd-MM-yyyy',
+//                    'widget' => 'single_text',
+//                    'format' => 'dd-MM-yyyy',
                     'required' => false,
                     'attr' => ['class' => 'date_time_selector']
                 ]
             )
             ->add(
-                'type', null, [], 'sonata_type_translatable_choice',
+                'type', null, [], null,
                 [
-                    'choices' => AdminLog::getTypes(),
-                    'translation_domain' => 'messages'
+//                    'choices' => AdminLog::getTypes(),
+//                    'translation_domain' => 'messages'
                 ]
             )
             ->add('user')
             ->add('adminLabel')
             ->add(
-                'groupLabel', null, [],  'choice',
+                'groupLabel', null, [],  null,
                 [
-                    'choices' => $this->getGroups()
+//                    'choices' => $this->getGroups()
                 ]
             )
             ->add('entityName')
@@ -283,12 +283,12 @@ class AdminLogAdmin extends Admin
         foreach ($configurationPool->getAdminGroups() as $sectionLabel => $group) {
 
             foreach ($group['items'] as $adminServiceId) {
-                if (!$entityClass = $entityClasses[$adminServiceId]) {
+                if (!$entityClass = $entityClasses[$adminServiceId['admin']]) {
                     continue;
                 }
 
                 $routes = $this->getAdminRoutes();
-                if (!array_key_exists($adminServiceId, $routes)) {
+                if (!array_key_exists($adminServiceId['admin'], $routes)) {
                     continue;
                 }
 
@@ -297,7 +297,7 @@ class AdminLogAdmin extends Admin
                     'groupLabel' => $sectionLabel,
                     'groupLabelTrans' => $group['label'],
                     //'adminLabel'    => $configurationPool->getAdminByAdminCode($adminServiceId)->getLabel(),
-                    'route' => $routes[$adminServiceId],
+                    'route' => $routes[$adminServiceId['admin']],
                 ];
             }
         }

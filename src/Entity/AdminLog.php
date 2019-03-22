@@ -13,6 +13,7 @@
 
 namespace Ai\Bundle\AdminLoggerBundle\Entity;
 
+use App\Application\Sonata\UserBundle\Entity\User;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
 
@@ -135,7 +136,7 @@ class AdminLog
     private $changeset;
 
     /**
-     * @ORM\ManyToOne(targetEntity="\AppBundle\Entity\User")
+     * @ORM\ManyToOne(targetEntity="App\Application\Sonata\UserBundle\Entity\User")
      * @ORM\JoinColumn(name="user_id", referencedColumnName="id")
      */
     private $user;
@@ -426,10 +427,10 @@ class AdminLog
     /**
      * Set user
      *
-     * @param \AppBundle\Entity\User $user
+     * @param User $user
      * @return AdminLog
      */
-    public function setUser(\AppBundle\Entity\User $user = null)
+    public function setUser(User $user = null)
     {
         $this->user = $user;
 
@@ -439,7 +440,7 @@ class AdminLog
     /**
      * Get user
      *
-     * @return \AppBundle\Entity\User
+     * @return User
      */
     public function getUser()
     {
