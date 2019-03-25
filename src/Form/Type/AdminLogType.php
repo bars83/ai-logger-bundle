@@ -15,6 +15,8 @@ namespace Ai\Bundle\AdminLoggerBundle\Form\Type;
 
 use Doctrine\ORM\EntityManager;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\FormType;
+use Symfony\Component\Form\Form;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\Form\FormView;
@@ -113,6 +115,6 @@ class AdminLogType extends AbstractType
      */
     public function getParent()
     {
-        return 'form';
+        return FormType::class;
     }
 }

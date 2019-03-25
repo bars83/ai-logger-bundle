@@ -15,6 +15,7 @@ namespace Ai\Bundle\AdminLoggerBundle\Admin;
 
 use Ai\Bundle\AdminLoggerBundle\Form\Type\AdminLinkType;
 use Ai\Bundle\AdminLoggerBundle\Form\Type\AdminLogType;
+use Sonata\AdminBundle\Admin\AbstractAdmin;
 use Sonata\AdminBundle\Admin\Admin;
 use Sonata\AdminBundle\Datagrid\DatagridMapper;
 use Sonata\AdminBundle\Datagrid\ListMapper;
@@ -22,7 +23,12 @@ use Sonata\AdminBundle\Form\FormMapper;
 use Sonata\AdminBundle\Show\ShowMapper;
 use Sonata\AdminBundle\Route\RouteCollection;
 use Ai\Bundle\AdminLoggerBundle\Entity\AdminLog;
+use Sonata\CoreBundle\Form\Type\TranslatableChoiceType;
+use Sonata\Form\Type\DateRangePickerType;
+use Sonata\Form\Type\DateRangeType;
+use Sonata\DoctrineORMAdminBundle\Filter\DateRangeFilter;
 use Symfony\Component\DependencyInjection\ContainerAwareTrait;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 
 /**
  * AdminLogAdmin Class
@@ -33,15 +39,15 @@ use Symfony\Component\DependencyInjection\ContainerAwareTrait;
  * @license  https://github.com/ruslana-net/ai-logger-bundle/LICENSE MIT License
  * @link     https://github.com/ruslana-net/ai-logger-bundle
  */
-class AdminLogAdmin extends Admin
+class AdminLogAdmin extends AbstractAdmin
 {
     use ContainerAwareTrait;
 
-    protected static $adminOptions=[];
+    protected static $adminOptions = [];
 
-    protected static $adminRoutes=[];
+    protected static $adminRoutes = [];
 
-    protected static $adminGroups=[];
+    protected static $adminGroups = [];
 
     /**
      * Admin configure
@@ -52,7 +58,7 @@ class AdminLogAdmin extends Admin
     {
         parent::configure();
 
-        $this->datagridValues['_sort_by']    = 'crdate';
+        $this->datagridValues['_sort_by'] = 'crdate';
         $this->datagridValues['_sort_order'] = 'DESC';
     }
 
@@ -68,29 +74,32 @@ class AdminLogAdmin extends Admin
         $datagridMapper
             ->add(
                 'crdate',
-                'doctrine_orm_datetime_range',
-                [],
+                DateRangeFilter::class,
+                ['field_type' => DateRangePickerType::class],
                 null,
                 [
-//                    'widget' => 'single_text',
-//                    'format' => 'dd-MM-yyyy',
+                    'field_options' => [
+                        'format' => 'yyyy-MM-dd',
+                        'widget' => 'single_text',
+                        'attr' => ['class' => 'date_time_selector']
+                    ],
                     'required' => false,
-                    'attr' => ['class' => 'date_time_selector']
+
                 ]
             )
             ->add(
-                'type', null, [], null,
+                'type', null, [], TranslatableChoiceType::class,
                 [
-//                    'choices' => AdminLog::getTypes(),
-//                    'translation_domain' => 'messages'
+                    'choices' => AdminLog::getTypes(),
+                    'translation_domain' => 'messages'
                 ]
             )
             ->add('user')
             ->add('adminLabel')
             ->add(
-                'groupLabel', null, [],  null,
+                'groupLabel', null, [], ChoiceType::class,
                 [
-//                    'choices' => $this->getGroups()
+                    'choices' => $this->getGroups()
                 ]
             )
             ->add('entityName')
@@ -111,39 +120,39 @@ class AdminLogAdmin extends Admin
             ->add(
                 'group', 'string',
                 [
-                'template' => 'AiAdminLoggerBundle:CRUD:list_group_field.html.twig',
+                    'template' => 'AiAdminLoggerBundle:CRUD:list_group_field.html.twig',
                 ]
             )
             ->add(
                 'admin', 'string',
                 [
-                'template' => 'AiAdminLoggerBundle:CRUD:list_admin_field.html.twig',
+                    'template' => 'AiAdminLoggerBundle:CRUD:list_admin_field.html.twig',
                 ]
             )
             ->add(
                 'entity_link', 'string',
                 [
-                'template' => 'AiAdminLoggerBundle:CRUD:list_entity_field.html.twig',
+                    'template' => 'AiAdminLoggerBundle:CRUD:list_entity_field.html.twig',
                 ]
             )
             ->add(
                 'category_link', 'string',
                 [
-                'template' => 'AiAdminLoggerBundle:CRUD:list_category_field.html.twig',
+                    'template' => 'AiAdminLoggerBundle:CRUD:list_category_field.html.twig',
                 ]
             )
             ->add('user')
             ->add(
                 'type', 'string',
                 [
-                'label' => 'list.label_type_description',
-                'template' => 'AiAdminLoggerBundle:CRUD:list_type_field.html.twig',
+                    'label' => 'list.label_type_description',
+                    'template' => 'AiAdminLoggerBundle:CRUD:list_type_field.html.twig',
                 ]
             )
             ->add(
                 '_action', 'actions',
                 [
-                'template' => 'AiAdminLoggerBundle:CRUD:list_actions_field.html.twig',
+                    'template' => 'AiAdminLoggerBundle:CRUD:list_actions_field.html.twig',
                 ]
             );
     }
@@ -198,13 +207,13 @@ class AdminLogAdmin extends Admin
             ->add(
                 'type', 'string',
                 [
-                'template' => 'AiAdminLoggerBundle:CRUD:show_type_field.html.twig',
+                    'template' => 'AiAdminLoggerBundle:CRUD:show_type_field.html.twig',
                 ]
             )
             ->add(
                 'changeset', 'string',
                 [
-                'template' => 'AiAdminLoggerBundle:CRUD:show_changeset_field.html.twig'
+                    'template' => 'AiAdminLoggerBundle:CRUD:show_changeset_field.html.twig'
                 ]
             );
     }
