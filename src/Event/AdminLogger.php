@@ -60,10 +60,10 @@ class AdminLogger
      *
      * @param PersistenceEvent $event event object
      *
-     * @throws AccessDeniedException
+     * @return void
      * @throws InvalidArgumentException
      *
-     * @return void
+     * @throws AccessDeniedException
      */
     public function create(PersistenceEvent $event)
     {
@@ -79,10 +79,10 @@ class AdminLogger
      *
      * @param PersistenceEvent $event event object
      *
-     * @throws AccessDeniedException
+     * @return void
      * @throws InvalidArgumentException
      *
-     * @return void
+     * @throws AccessDeniedException
      */
     public function update(PersistenceEvent $event)
     {
@@ -98,10 +98,10 @@ class AdminLogger
      *
      * @param PersistenceEvent $event event object
      *
-     * @throws AccessDeniedException
+     * @return void
      * @throws InvalidArgumentException
      *
-     * @return void
+     * @throws AccessDeniedException
      */
     public function remove(PersistenceEvent $event)
     {
@@ -117,10 +117,10 @@ class AdminLogger
      *
      * @param PersistenceEvent $event event object
      *
-     * @throws AccessDeniedException
+     * @return void
      * @throws InvalidArgumentException
      *
-     * @return void
+     * @throws AccessDeniedException
      */
     protected function logObjectChanges(PersistenceEvent $event)
     {
@@ -157,9 +157,9 @@ class AdminLogger
      * Log
      *
      * @param string $loggerType self::$LOGGER_TYPES
-     * @param object $object     entity object
-     * @param object $event      event object
-     * @param array  $objMapping object mapping in config
+     * @param object $object entity object
+     * @param object $event event object
+     * @param array $objMapping object mapping in config
      *
      * @return void
      */
@@ -263,7 +263,8 @@ class AdminLogger
                         'old' => $changeset[$fieldName][0],
                         'new' => $changeset[$fieldName][1],
                     ];
-                    $changes[$fieldName] = array_merge($changes[$fieldName], $adminFieldGroups[$fieldName]);
+                    if (array_key_exists($fieldName, $adminFieldGroups))
+                        $changes[$fieldName] = array_merge($changes[$fieldName], $adminFieldGroups[$fieldName]);
                 }
             }
 
@@ -332,6 +333,8 @@ class AdminLogger
     protected function getAdminFieldGroups(AdminInterface $admin)
     {
         $adminFormGroups = $admin->getFormGroups();
+        if (!$adminFormGroups)
+            $adminFormGroups = [];
         $adminFieldGroups = [];
         foreach ($adminFormGroups as $groupName => $group) {
             foreach ($group['fields'] as $field => $val) {
